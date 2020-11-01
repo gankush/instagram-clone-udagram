@@ -64,6 +64,10 @@ functions:
           path: todos
           cors: true
           auth: Auth
+          reqValidatorName: RequestBodyValidator
+          # request:
+          #   schema:
+          #     application/json: ${file(src/models/create-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -83,6 +87,7 @@ functions:
           - xray:PutTraceSegments
         Resource:
           - "*"
+          
 
   UpdateTodo:
     handler: src/lambda/http/updateTodo.handler
@@ -92,6 +97,10 @@ functions:
           path: todos/{todoId}
           cors: true
           auth: Auth
+          # reqValidatorName: RequestBodyValidator
+          # request:
+          #   schema:
+          #     application/json: ${file(src/models/update-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -188,6 +197,16 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
+    
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: true
+
 
     # DynamoDB
     TodosTable:
@@ -203,6 +222,10 @@ resources:
         KeySchema:
           - AttributeName: todoId
             KeyType: HASH
+          # - AttributeName: userId
+          #   KeyType: HASH  
+          # - AttributeName : todoId
+          #   KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.TODOS_TABLE}
         GlobalSecondaryIndexes:
