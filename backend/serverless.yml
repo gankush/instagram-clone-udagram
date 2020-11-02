@@ -13,7 +13,7 @@ provider:
   region: ${opt:region, 'us-east-2'}
 
   environment:
-    TODOS_TABLE: Todos-${self:provider.stage}
+    TODOS_TABLE: Todos-ankush-${self:provider.stage}
     TODOS_BY_USER_INDEX: TodosByUserIndex
     ATTACHMENTS_S3_BUCKET: todos-attachments-ankush-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
@@ -64,10 +64,6 @@ functions:
           path: todos
           cors: true
           auth: Auth
-          reqValidatorName: RequestBodyValidator
-          # request:
-          #   schema:
-          #     application/json: ${file(src/models/create-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -87,7 +83,6 @@ functions:
           - xray:PutTraceSegments
         Resource:
           - "*"
-          
 
   UpdateTodo:
     handler: src/lambda/http/updateTodo.handler
@@ -97,10 +92,6 @@ functions:
           path: todos/{todoId}
           cors: true
           auth: Auth
-          # reqValidatorName: RequestBodyValidator
-          # request:
-          #   schema:
-          #     application/json: ${file(src/models/update-todo-request.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -197,16 +188,6 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
-    
-    RequestBodyValidator:
-      Type: AWS::ApiGateway::RequestValidator
-      Properties:
-        Name: 'request-body-validator'
-        RestApiId:
-          Ref: ApiGatewayRestApi
-        ValidateRequestBody: true
-        ValidateRequestParameters: true
-
 
     # DynamoDB
     TodosTable:
@@ -220,12 +201,10 @@ resources:
           - AttributeName: createdAt
             AttributeType: S
         KeySchema:
-          - AttributeName: todoId
+          - AttributeName: userId
             KeyType: HASH
-          # - AttributeName: userId
-          #   KeyType: HASH  
-          # - AttributeName : todoId
-          #   KeyType: RANGE
+          - AttributeName: todoId
+            KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.TODOS_TABLE}
         GlobalSecondaryIndexes:
