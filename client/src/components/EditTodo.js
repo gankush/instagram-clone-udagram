@@ -1,38 +1,23 @@
 import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
-import { getUploadUrl, uploadFile } from '../api/todos-api'
+import { getUploadUrl, uploadFile } from '../api/todos-api.js'
 
-enum UploadState {
-  NoUpload,
-  FetchingPresignedUrl,
-  UploadingFile,
+const UploadState= {
+  NoUpload:0,
+  FetchingPresignedUrl:null,
+  UploadingFile:null,
 }
 
-interface EditTodoProps {
-  match: {
-    params: {
-      todoId: string
-    }
-  }
-  auth: Auth
-}
 
-interface EditTodoState {
-  file: any
-  uploadState: UploadState
-}
 
-export class EditTodo extends React.PureComponent<
-  EditTodoProps,
-  EditTodoState
-> {
-  state: EditTodoState = {
+export class EditTodo extends React.PureComponent{
+  state = {
     file: undefined,
     uploadState: UploadState.NoUpload
   }
 
-  handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleFileChange = (event) => {
     const files = event.target.files
     if (!files) return
 
@@ -41,7 +26,7 @@ export class EditTodo extends React.PureComponent<
     })
   }
 
-  handleSubmit = async (event: React.SyntheticEvent) => {
+  handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
@@ -64,7 +49,7 @@ export class EditTodo extends React.PureComponent<
     }
   }
 
-  setUploadState(uploadState: UploadState) {
+  setUploadState(uploadState) {
     this.setState({
       uploadState
     })
@@ -96,8 +81,8 @@ export class EditTodo extends React.PureComponent<
 
     return (
       <div>
-        {this.state.uploadState === UploadState.FetchingPresignedUrl && <p>Uploading image metadata</p>}
-        {this.state.uploadState === UploadState.UploadingFile && <p>Uploading file</p>}
+        {this.state.uploadState === UploadState.FetchingPresignedUrl}
+        {this.state.uploadState === UploadState.UploadingFile}
         <Button
           loading={this.state.uploadState !== UploadState.NoUpload}
           type="submit"
