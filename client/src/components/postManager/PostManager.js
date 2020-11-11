@@ -27,7 +27,7 @@ class PostManager extends Component {
       var bearer = 'Bearer ' + token;
       console.log(bearer);
     const response = await fetch(
-      'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts', {
+      'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos', {
       method: 'GET',
      
       headers: {

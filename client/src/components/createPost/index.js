@@ -30,7 +30,7 @@ class CreatePost extends Component {
       console.log("postId: ",postId);
       console.log("File: ",file);
       const response = await fetch(
-        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts/${postId}/attachment`, {
+        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}/attachment`, {
         method: 'POST',
         mode: 'cors'
 
@@ -73,7 +73,7 @@ class CreatePost extends Component {
         }
         console.log(postData);
         const response = await fetch(
-          'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts', {
+          'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos', {
           method: 'POST',
           mode: 'cors',
           body: JSON.stringify(postData)
@@ -102,7 +102,7 @@ class CreatePost extends Component {
         console.log(postData)
         let postId = postData.postId;
         const response = await fetch(
-          `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts/${postId}`, {
+          `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
           method: 'PATCH',
           mode: 'cors',
           body: JSON.stringify(postUpdateData)
@@ -130,7 +130,7 @@ class CreatePost extends Component {
       }
       console.log("trying to delete post", userId, postId);
       const response = await fetch(
-        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts/${postId}`, {
+        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
         method: 'DELETE',
         mode: 'cors',
         body: JSON.stringify(postData)
@@ -156,7 +156,7 @@ class CreatePost extends Component {
       }
       console.log("trying to delete post", userId, postId);
       const response = await fetch(
-        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/posts/${postId}`, {
+        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
         method: 'DELETE',
         mode: 'cors',
         body: JSON.stringify(postData)
