@@ -1,0 +1,65 @@
+/* src/components/Header/createPost.css */
+.CreatePostDiv {
+    margin-top: 100px;
+}
+.CreatePost {
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+    background-color: #fff;
+    margin-top: 15%;
+    margin-left : 20%;
+    margin-right: 20%;
+  }
+  .Create-post-user {
+    display: flex;
+    padding: 16px;
+    align-items: center;
+  }
+  .Create-post-user-avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .Create-post-user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  .Create-post-div {
+    width: 100%;
+    
+  }
+  .ButtonSection {
+    
+    margin-left : 10%;
+    margin-right: 2%;
+    border-top: 2px solid  #ccc;
+    
+  }
+  .Create-post-input {
+    width: 100%;
+    height: 50px;
+    margin-left: 5px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+  }
+  .ButtonClass{
+    background-color:white;
+    border-radius: 6px;
+    height: 30px;
+    width: 50px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+  }
+  .ButtonClass:focus {
+    outline: none;
+  }
+  .ButtonClass:active {
+    background-color:rgb(211, 211, 211);
+  }
