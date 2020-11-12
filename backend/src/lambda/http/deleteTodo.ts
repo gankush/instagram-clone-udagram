@@ -4,14 +4,14 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } f
 
 import { deleteTodo } from '../../businessLogic/todos'
 import { createLogger } from '../../utils/logger'
-import { getUserId } from '../utils'
+// import { getUserId } from '../utils'
 
 const logger = createLogger('deleteTodo')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   logger.info('Processing deleteTodo event', { event })
 
-  const userId = getUserId(event)
+  const userId = JSON.parse(event.body).userId;
   const todoId = event.pathParameters.todoId
 
   await deleteTodo(userId, todoId)
@@ -19,8 +19,9 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   return {
     statusCode: 204,
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
     },
-    body: ''
+    body: 'deleted'
   }
 }

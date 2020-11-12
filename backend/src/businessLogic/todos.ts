@@ -60,7 +60,7 @@ export async function deleteTodo(userId: string, todoId: string) {
   logger.info(`Deleting todo ${todoId} for user ${userId}`, { userId, todoId })
 
   const item = await todosAccess.getTodoItem(todoId,userId)
-
+  logger.info(`Bhen ${item} `)
   if (!item)
     throw new Error('Item not found')  // FIXME: 404?
 

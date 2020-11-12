@@ -1,10 +1,9 @@
-import { apiEndpoint } from '../config'
-import { Todo } from '../types/Todo';
-import { CreateTodoRequest } from '../types/CreateTodoRequest';
-import Axios from 'axios'
-import { UpdateTodoRequest } from '../types/UpdateTodoRequest';
+import { apiEndpoint } from '../config.js'
 
-export async function getTodos(idToken: string): Promise<Todo[]> {
+import Axios from 'axios'
+
+
+export async function getTodos(idToken) {
   console.log('Fetching todos')
 
   const response = await Axios.get(`${apiEndpoint}/todos`, {
@@ -18,9 +17,9 @@ export async function getTodos(idToken: string): Promise<Todo[]> {
 }
 
 export async function createTodo(
-  idToken: string,
-  newTodo: CreateTodoRequest
-): Promise<Todo> {
+  idToken,
+  newTodo
+) {
   const response = await Axios.post(`${apiEndpoint}/todos`,  JSON.stringify(newTodo), {
     headers: {
       'Content-Type': 'application/json',
@@ -31,10 +30,10 @@ export async function createTodo(
 }
 
 export async function patchTodo(
-  idToken: string,
-  todoId: string,
-  updatedTodo: UpdateTodoRequest
-): Promise<void> {
+  idToken,
+  todoId,
+  updatedTodo
+) {
   await Axios.patch(`${apiEndpoint}/todos/${todoId}`, JSON.stringify(updatedTodo), {
     headers: {
       'Content-Type': 'application/json',
@@ -44,9 +43,9 @@ export async function patchTodo(
 }
 
 export async function deleteTodo(
-  idToken: string,
-  todoId: string
-): Promise<void> {
+  idToken,
+  todoId
+) {
   await Axios.delete(`${apiEndpoint}/todos/${todoId}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -56,9 +55,9 @@ export async function deleteTodo(
 }
 
 export async function getUploadUrl(
-  idToken: string,
-  todoId: string
-): Promise<string> {
+  idToken,
+  todoId
+) {
   const response = await Axios.post(`${apiEndpoint}/todos/${todoId}/attachment`, '', {
     headers: {
       'Content-Type': 'application/json',
@@ -68,6 +67,6 @@ export async function getUploadUrl(
   return response.data.uploadUrl
 }
 
-export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void> {
+export async function uploadFile(uploadUrl, file) {
   await Axios.put(uploadUrl, file)
 }

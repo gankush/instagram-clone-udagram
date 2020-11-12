@@ -19,7 +19,7 @@ provider:
     TODOS_BY_USER_INDEX: TodosByUserIndex
     ATTACHMENTS_S3_BUCKET: todos-attachments-ankush17-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
-    AUTH_0_JWKS_URL: https://dev-q0yt18us.us.auth0.com/.well-known/jwks.json
+    AUTH_0_JWKS_URL: https://dev--skybrx8.us.auth0.com/.well-known/jwks.json
 
   tracing:
     lambda: true
@@ -56,7 +56,7 @@ functions:
           method: get
           path: todos
           cors: true
-          auth: Auth
+      
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -84,7 +84,7 @@ functions:
           method: post
           path: todos
           cors: true
-          auth: Auth
+        
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new group
@@ -118,7 +118,7 @@ functions:
           method: patch
           path: todos/{todoId}
           cors: true
-          auth: Auth
+          
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new group
@@ -153,12 +153,13 @@ functions:
           method: delete
           path: todos/{todoId}
           cors: true
-          auth: Auth
+          
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:DeleteItem
           - dynamodb:GetItem
+          
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
@@ -182,7 +183,7 @@ functions:
           method: post
           path: todos/{todoId}/attachment
           cors: true
-          auth: Auth
+          
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -193,6 +194,7 @@ functions:
         Action:
           - dynamodb:UpdateItem
           - dynamodb:GetItem
+          - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
