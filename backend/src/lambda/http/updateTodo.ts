@@ -1,29 +1,59 @@
 import 'source-map-support/register'
+import * as AWS  from 'aws-sdk'
 
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 
-import { updateTodo } from '../../businessLogic/todos'
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
-import { createLogger } from '../../utils/logger'
-// import { getUserId } from '../utils'
 
-const logger = createLogger('updateTodo')
+//import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
+
+const docClient = new AWS.DynamoDB.DocumentClient()
+const todoTable = process.env.TODOS_TABLE
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  logger.info('Processing updateTodo event', { event })
+  const updatedTodo = JSON.parse(event.body);
+  const todoId = event.pathParameters.todoId;
+  const userId = updatedTodo.userId;
 
-  const userId = JSON.parse(event.body).userId;
-  const todoId = event.pathParameters.todoId
-  const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
-
-  await updateTodo(userId, todoId, updatedTodo)
-
-  return {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true
+  var params = {
+    TableName:todoTable,
+    Key:{
+      "userId": userId,
+      "todoId":todoId
+      
     },
-    body: ''
+    UpdateExpression: "set #name_todo = :n",
+    ExpressionAttributeValues:{
+        ":n": updatedTodo.name.toString()
+       
+    },
+    ExpressionAttributeNames:{
+      "#name_todo": "name"
+
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+await docClient.update(params, function(err, data) {
+  if (err) {
+      console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+      return {
+        statusCode:404,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: 'Unable to delete' 
+
+      }
+  } else {
+      console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+  }
+}).promise();
+  // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
+  return {
+    statusCode:201,
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify(updatedTodo) 
   }
 }

@@ -2,7 +2,7 @@ import 'source-map-support/register'
 
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
 
-import { getTodos } from '../../businessLogic/todos'
+import { getAllToDos } from '../../businessLogic/todos'
 import { createLogger } from '../../utils/logger'
 import { getUserId } from '../utils'
 
@@ -13,7 +13,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
   const userId = getUserId(event)
 
-  const items = await getTodos(userId)
+  const items = await getAllToDos(userId)
 
   return {
     statusCode: 200,

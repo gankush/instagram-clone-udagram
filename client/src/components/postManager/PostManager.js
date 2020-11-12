@@ -82,6 +82,7 @@ class PostManager extends Component {
     this.data.userId = this.props.user.sub;
     let name = this.props.user.name;
     let profilePicture = this.props.user.picture;
+    console.log(profilePicture)
     return (
       <div>
         <div>{this.state.seen ? 
