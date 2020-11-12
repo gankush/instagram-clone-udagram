@@ -16,6 +16,7 @@ class Post extends Component {
     }
 
     handleClick() {
+        console.log(this.userId)
         const data = {
             caption : this.props.caption,
             image : this.props.image,
@@ -32,6 +33,7 @@ class Post extends Component {
         const postId = this.props.postId;
         const avatar = this.props.avatar;
         const image = this.props.image;
+        const username = this.props.username;
         //console.log(image==="")
         const caption = this.props.caption;
         this.userId = userId;
@@ -45,7 +47,7 @@ class Post extends Component {
                             <img src={avatar} alt="Chris" />
                         </div>
                         <div className="Post-user-nickname">
-                            <span>{userId}</span>
+                            <span>{username}</span>
                         </div>
                         <button className="optionButton" onClick={() =>this.handleClick()}>...</button>
                     </div>
@@ -58,7 +60,7 @@ class Post extends Component {
                 </div>
             </div>
             <div className="Post-caption">
-                <strong>{userId}</strong> {caption}
+                <strong>{username}</strong> {caption}
             </div>
             </article >
         );

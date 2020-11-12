@@ -10,6 +10,7 @@ class CreatePost extends Component {
     this.selectedImage = null;
     this.fileUploadClick = this.fileUploadClick.bind(this);
   }
+  
   handleClick() {
     const data = {
       caption: '',
@@ -22,18 +23,23 @@ class CreatePost extends Component {
     console.log(data)
   };
 
-  uploadImage = async (file, postId) => {
+ 
+
+  uploadImage = async (file, postId, userId) => {
     if (file == null) {
       return "null"
     }
     try {
+     let postData={
+       userId:userId
+     }
       console.log("postId: ",postId);
       console.log("File: ",file);
       const response = await fetch(
         `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}/attachment`, {
         method: 'POST',
-        mode: 'cors'
-
+        mode: 'cors',
+        body: JSON.stringify(postData)
       })
       const data = await response.json();
       let uploadUrl = data.uploadUrl
@@ -55,19 +61,19 @@ class CreatePost extends Component {
       return "null"
     }
   }
-
+  
   createPost = async (postBar, postData) => {
-    console.log(this.props.deleteOption);
+    // console.log(this.props.deleteOption);
     let postId = uuidv4();
     let userId = postData.userId;
-    console.log(postData); 
-    let url = await this.uploadImage(this.selectedImage, postId);
-    console.log(url);
+    // console.log(postData); 
+    let url = await this.uploadImage(this.selectedImage, postId, userId);
+    // console.log(url);
     if (!this.props.deleteOption) {
       try {
         let postData = {
           userId: userId,
-          postId: postId,
+          todoId: postId,
           name: postBar.value,
           url: url
         }
@@ -124,9 +130,10 @@ class CreatePost extends Component {
 
   deletePost = async (userId, postId) => {
     try {
+      // const token = this.props.token;
+      // var bearer = 'Bearer ' + token;
       let postData = {
         userId: userId
-
       }
       console.log("trying to delete post", userId, postId);
       const response = await fetch(
@@ -138,7 +145,7 @@ class CreatePost extends Component {
       )
       const data = await response.json();
       console.log("Post Deleted:  ", data);
-      //alert("Post Deleted");
+      alert("Post Deleted");
       this.handleClick();
       await this.props.refreshPosts();
     }
@@ -148,31 +155,31 @@ class CreatePost extends Component {
 
   }
 
-  UpdatePost = async (userId, postId) => {
-    try {
-      let postData = {
-        userId: userId
+  // UpdatePost = async (userId, postId) => {
+  //   try {
+  //     let postData = {
+  //       userId: userId
 
-      }
-      console.log("trying to delete post", userId, postId);
-      const response = await fetch(
-        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
-        method: 'DELETE',
-        mode: 'cors',
-        body: JSON.stringify(postData)
-      }
-      )
-      const data = await response.json();
-      console.log("Post Deleted:  ", data);
-      //alert("Post Deleted");
-      this.handleClick();
-      await this.props.refreshPosts();
-    }
-    catch{
-      alert("Delete Posts failed")
-    }
+  //     }
+  //     console.log("trying to delete post", userId, postId);
+  //     const response = await fetch(
+  //       `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
+  //       method: 'DELETE',
+  //       mode: 'cors',
+  //       body: JSON.stringify(postData)
+  //     }
+  //     )
+  //     const data = await response.json();
+  //     console.log("Post Deleted:  ", data);
+  //     //alert("Post Deleted");
+  //     this.handleClick();
+  //     await this.props.refreshPosts();
+  //   }
+  //   catch{
+  //     alert("Delete Posts failed")
+  //   }
 
-  }
+  // }
 
   fileUploadClick() {
     this.refs.fileUploader.click();
@@ -185,6 +192,7 @@ class CreatePost extends Component {
   render() {
     let caption = '', userId = '', postId = '';
     if (this.props.data !== undefined) {
+      // console.log(this.props)
       caption = this.props.data.caption;
       userId = this.props.data.userId;
       postId = this.props.data.postId;
@@ -193,9 +201,9 @@ class CreatePost extends Component {
       url: '',
       caption: caption,
       userId: userId,
-      postId: postId
+      todoId: postId
     }
-    console.log(this.props.data);
+    // console.log(this.props.data);
     //console.log("createPost: ", this.props.data)
     const avatar = this.props.avatar;
     const deleteOption = this.props.deleteOption

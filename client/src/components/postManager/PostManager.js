@@ -25,7 +25,7 @@ class PostManager extends Component {
      try{
       const token = this.props.token;
       var bearer = 'Bearer ' + token;
-      console.log(bearer);
+      // console.log(bearer);
     const response = await fetch(
       'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos', {
       method: 'GET',
@@ -37,13 +37,15 @@ class PostManager extends Component {
     }
     )
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     let items = data.items;
     
     this.setState({
       posts: items,
       refresh: true
     });
+
+    // console.log(this.state.posts)
   }
   catch{
     alert("Fetching Posts failed")
@@ -57,12 +59,13 @@ class PostManager extends Component {
       
     });
     if (data){
+     
         this.data.caption = data.caption
         this.data.postId=data.postId;
         this.data.userId=data.userId;
 
     }
-    console.log(this.caption)
+  
   };
 
 
@@ -73,8 +76,8 @@ class PostManager extends Component {
   componentWillUnmount() {
     clearInterval(this.getPost);
   }
-
-
+  
+  
   render() {
     this.data.userId = this.props.user.sub;
     let name = this.props.user.name;
@@ -90,7 +93,7 @@ class PostManager extends Component {
         </div>
         <CreatePost 
           avatar={profilePicture}
-          deleteOption={false} data={this.data}
+          deleteOption={false} data={this.data} token={this.props.token}
           refreshPosts={async () => await this.getPosts()}>
           
         </CreatePost>
@@ -103,7 +106,7 @@ class PostManager extends Component {
 
         return (
           
-          <Post userId={name} postId = {item.postId} 
+          <Post userId={item.userId} username={name} postId = {item.todoId} 
             avatar={profilePicture} 
             caption={item.name} image={imageUrl} toggle={(data) => this.togglePopUp(data)} 
             refreshPosts={async () => await this.getPosts()}>
