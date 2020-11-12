@@ -106,7 +106,7 @@ class CreatePost extends Component {
 
         }
         console.log(postData)
-        let postId = postData.postId;
+        let postId = postData.todoId;
         const response = await fetch(
           `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
           method: 'PATCH',
@@ -155,31 +155,31 @@ class CreatePost extends Component {
 
   }
 
-  // UpdatePost = async (userId, postId) => {
-  //   try {
-  //     let postData = {
-  //       userId: userId
+  UpdatePost = async (userId, postId) => {
+    try {
+      let postData = {
+        userId: userId
 
-  //     }
-  //     console.log("trying to delete post", userId, postId);
-  //     const response = await fetch(
-  //       `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
-  //       method: 'DELETE',
-  //       mode: 'cors',
-  //       body: JSON.stringify(postData)
-  //     }
-  //     )
-  //     const data = await response.json();
-  //     console.log("Post Deleted:  ", data);
-  //     //alert("Post Deleted");
-  //     this.handleClick();
-  //     await this.props.refreshPosts();
-  //   }
-  //   catch{
-  //     alert("Delete Posts failed")
-  //   }
+      }
+      console.log("trying to delete post", userId, postId);
+      const response = await fetch(
+        `https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos/${postId}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        body: JSON.stringify(postData)
+      }
+      )
+      const data = await response.json();
+      console.log("Post Deleted:  ", data);
+      //alert("Post Deleted");
+      this.handleClick();
+      await this.props.refreshPosts();
+    }
+    catch{
+      alert("Delete Posts failed")
+    }
 
-  // }
+  }
 
   fileUploadClick() {
     this.refs.fileUploader.click();

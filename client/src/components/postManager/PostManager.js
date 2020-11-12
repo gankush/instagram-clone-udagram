@@ -25,7 +25,7 @@ class PostManager extends Component {
      try{
       const token = this.props.token;
       var bearer = 'Bearer ' + token;
-      // console.log(bearer);
+      console.log(bearer);
     const response = await fetch(
       'https://i77ywsygj4.execute-api.us-east-2.amazonaws.com/dev/todos', {
       method: 'GET',
