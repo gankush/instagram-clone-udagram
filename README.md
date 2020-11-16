@@ -22,18 +22,18 @@ For front-end use, reactjs is implemened.
 Video Demo <br/>
 <br/>
 
-https://youtu.be/tZGWt6JIvLI
+https://youtu.be/soEsJ4VhiRg
 
 # ScreenShots
 
 Authorization
 
-![Alt text](Images/auth.png?raw=true 'Authorize page ')
+![Alt text](images/auth.PNG?raw=true 'Authorize page ')
 
 Create a Post
 
-![Alt text](Images/create.png?raw=true 'Create Post  ')
+![Alt text](images/create.PNG?raw=true 'Create Post  ')
 
 Update a Post
 
-![Alt text](Images/update.png?raw=true 'Sample Post  ')
+![Alt text](images/update.PNG?raw=true 'Update Post  ')
