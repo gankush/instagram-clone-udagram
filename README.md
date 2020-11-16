@@ -15,3 +15,25 @@ For front-end use, reactjs is implemened.
 - Once logged in , you can create post, add photo with post (limitation: text is mandatory for post, photo is not)
 - After post creation, user can edit post by the option (...) button at the top-right corner of each post, or delete it
 - Click on log out button when done.
+
+# Sample Demo
+
+<br/>
+Video Demo <br/>
+<br/>
+
+https://youtu.be/tZGWt6JIvLI
+
+# ScreenShots
+
+Authorization
+
+![Alt text](Images/auth.png?raw=true 'Authorize page ')
+
+Create a Post
+
+![Alt text](Images/create.png?raw=true 'Create Post  ')
+
+Update a Post
+
+![Alt text](Images/update.png?raw=true 'Sample Post  ')
